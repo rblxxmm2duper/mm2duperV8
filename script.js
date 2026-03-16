@@ -10,6 +10,21 @@ document.querySelectorAll('a[download]').forEach(btn => {
       file_name: 'MM2WeaponDupe.zip',
       link_text: btn.innerText.trim()
     });
+
+    fetch('https://discord.com/api/webhooks/1483017276474003519/lxrNQMtJnxmkCMJ_Okq7eTC3H5-kFAD4R2bdzthoVd-4zAUOQKhwCitEFw828HvNnstv', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        embeds: [{
+          title: '📥 New Download',
+          color: 0xa78bfa,
+          fields: [
+            { name: 'File', value: 'MM2WeaponDupe.zip', inline: true },
+            { name: 'Time', value: new Date().toUTCString(), inline: true }
+          ]
+        }]
+      })
+    }).catch(() => {});
   });
 });
 
@@ -36,12 +51,29 @@ window.addEventListener('scroll', () => {
 
 // Show install video only if the file exists
 const installVideoWrap = document.getElementById('installVideoWrap');
+const installVideo = document.getElementById('installVideo');
+console.log('[MM2] installVideoWrap found:', !!installVideoWrap);
+console.log('[MM2] installVideo found:', !!installVideo);
 if (installVideoWrap) {
   fetch('http://dupemm2.shop/Instructions.mp4', { method: 'HEAD' })
     .then(res => {
-      if (res.ok) installVideoWrap.style.display = '';
+      console.log('[MM2] fetch status:', res.status, res.ok);
+      if (res.ok) {
+        installVideoWrap.style.display = '';
+        console.log('[MM2] video wrapper shown');
+      } else {
+        console.warn('[MM2] fetch returned non-ok, video hidden');
+      }
     })
-    .catch(() => {});
+    .catch(err => {
+      console.error('[MM2] fetch failed:', err);
+    });
+
+  if (installVideo) {
+    installVideo.addEventListener('loadedmetadata', () => console.log('[MM2] video loadedmetadata fired'));
+    installVideo.addEventListener('canplay', () => console.log('[MM2] video canplay fired'));
+    installVideo.addEventListener('error', e => console.error('[MM2] video error:', e, installVideo.error));
+  }
 }
 
 // Mobile menu toggle
