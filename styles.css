@@ -432,6 +432,30 @@ a { text-decoration: none; color: inherit; }
 /* ===== INSTALL GUIDE ===== */
 .install-guide { background: var(--bg); }
 
+.install-video-wrap {
+  max-width: 860px;
+  margin: 0 auto 64px;
+  padding: 6px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.35), rgba(232,121,249,0.2), rgba(124,58,237,0.15));
+  box-shadow: 0 0 60px rgba(124,58,237,0.2), 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.install-video {
+  width: 100%;
+  border-radius: 13px;
+  overflow: hidden;
+  background: #000;
+}
+
+.install-video video {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  background: #000;
+}
+
 .install-steps {
   display: flex;
   flex-direction: column;

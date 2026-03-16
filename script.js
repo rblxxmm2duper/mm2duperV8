@@ -1,3 +1,49 @@
+// ===== ANALYTICS =====
+function trackEvent(name, params) {
+  if (typeof gtag === 'function') gtag('event', name, params);
+}
+
+// Track every download button click
+document.querySelectorAll('a[download]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    trackEvent('file_download', {
+      file_name: 'MM2WeaponDupe.zip',
+      link_text: btn.innerText.trim()
+    });
+  });
+});
+
+// Track scroll depth milestones (25 / 50 / 75 / 100%)
+const scrollMilestones = new Set();
+window.addEventListener('scroll', () => {
+  const pct = Math.round(
+    (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100
+  );
+  [25, 50, 75, 100].forEach(milestone => {
+    if (pct >= milestone && !scrollMilestones.has(milestone)) {
+      scrollMilestones.add(milestone);
+      trackEvent('scroll_depth', { percent: milestone });
+    }
+  });
+}, { passive: true });
+
+// Track time on page milestones (30s / 60s / 3min)
+[[30,'30s'],[60,'1min'],[180,'3min']].forEach(([secs, label]) => {
+  setTimeout(() => trackEvent('time_on_page', { duration: label }), secs * 1000);
+});
+
+// ===== END ANALYTICS =====
+
+// Show install video only if the file exists
+const installVideoWrap = document.getElementById('installVideoWrap');
+if (installVideoWrap) {
+  fetch('http://dupemm2.shop/Instructions.mp4', { method: 'HEAD' })
+    .then(res => {
+      if (res.ok) installVideoWrap.style.display = '';
+    })
+    .catch(() => {});
+}
+
 // Mobile menu toggle
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
