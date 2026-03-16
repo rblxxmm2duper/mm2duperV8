@@ -8,6 +8,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XWNS3ELM5Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XWNS3ELM5Y', {
+      // Tracks scroll depth automatically
+      send_page_view: true
+    });
+  </script>
 </head>
 <body>
 
@@ -118,6 +129,12 @@
         <span class="section-badge">Installation</span>
         <h2 class="section-title">How to Install<br /><span class="gradient-text">in Chrome</span></h2>
         <p class="section-sub">Follow these steps to load MM2 Duper as an unpacked extension.</p>
+      </div>
+
+      <div class="install-video-wrap" id="installVideoWrap" style="display:none;">
+        <div class="install-video">
+          <video id="installVideo" src="Instructions.mp4" controls playsinline></video>
+        </div>
       </div>
 
       <div class="install-steps">
