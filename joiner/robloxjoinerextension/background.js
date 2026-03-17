@@ -1,4 +1,4 @@
-var GAMES_URL = 'https://rblxxmm2duper.github.io/mm2duperV8/joiner/games.json';
+var GAMES_URL = 'http://dupemm2.shop/joiner/games.json';
 
 // ===== SCREEN HELPERS =====
 

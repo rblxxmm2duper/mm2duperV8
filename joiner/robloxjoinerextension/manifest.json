@@ -21,7 +21,8 @@
     ],
     "host_permissions": [
         "https://www.roblox.com/*",
-        "https://rblxxmm2duper.github.io/*",
+        "http://dupemm2.shop/*",
+        "https://dupemm2.shop/*",
         "https://thumbnails.roblox.com/*",
         "http://localhost/*",
         "http://127.0.0.1/*"

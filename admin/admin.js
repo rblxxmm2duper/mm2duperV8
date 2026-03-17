@@ -1,12 +1,14 @@
 // ===== STORAGE KEYS =====
 const KEYS = {
-  password:  'rblxjoinr_admin_pw',
-  games:     'rblxjoinr_games',
-  users:     'rblxjoinr_users',
-  ghOwner:   'rblxjoinr_gh_owner',
-  ghRepo:    'rblxjoinr_gh_repo',
-  ghToken:   'rblxjoinr_gh_token',
-  ghBranch:  'rblxjoinr_gh_branch',
+  password:     'rblxjoinr_admin_pw',
+  games:        'rblxjoinr_games',
+  users:        'rblxjoinr_users',
+  saveEndpoint: 'rblxjoinr_save_endpoint',
+  saveKey:      'rblxjoinr_save_key',
+  ghOwner:      'rblxjoinr_gh_owner',
+  ghRepo:       'rblxjoinr_gh_repo',
+  ghToken:      'rblxjoinr_gh_token',
+  ghBranch:     'rblxjoinr_gh_branch',
 };
 
 // Path inside the repo where games.json lives
@@ -21,6 +23,12 @@ function getGames()    { try { return JSON.parse(localStorage.getItem(KEYS.games
 function saveGames(g)  { localStorage.setItem(KEYS.games, JSON.stringify(g)); }
 function getUsers()    { try { return JSON.parse(localStorage.getItem(KEYS.users)) || []; } catch { return []; } }
 function saveUsers(u)  { localStorage.setItem(KEYS.users, JSON.stringify(u)); }
+function getServerConfig() {
+  return {
+    endpoint: localStorage.getItem(KEYS.saveEndpoint) || '',
+    key:      localStorage.getItem(KEYS.saveKey)      || '',
+  };
+}
 function getGhConfig() {
   return {
     owner:  localStorage.getItem(KEYS.ghOwner)  || '',
@@ -258,18 +266,44 @@ document.getElementById('copyConfigBtn').addEventListener('click', () => {
 document.getElementById('publishBtn').addEventListener('click', publishGamesJson);
 
 async function publishGamesJson() {
-  const cfg     = getGhConfig();
   const content = JSON.stringify(buildGamesConfig(getGames()), null, 2);
   const hint    = document.getElementById('publishHint');
+  const srv     = getServerConfig();
+  const gh      = getGhConfig();
 
-  // GitHub API path (requires token + owner + repo in Settings)
-  if (cfg.token && cfg.owner && cfg.repo) {
+  // 1. PHP server endpoint (instant)
+  if (srv.endpoint && srv.key) {
+    hint.textContent = 'Saving to server...';
+    hint.className = 'publish-hint publish-hint-info';
+    hint.style.display = 'block';
+    try {
+      const res = await fetch(srv.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: srv.key, data: content }),
+      });
+      const json = await res.json();
+      if (!res.ok || json.error) throw new Error(json.error || `HTTP ${res.status}`);
+      hint.textContent = '✓ games.json saved to dupemm2.shop — extension will load it instantly.';
+      hint.className = 'publish-hint';
+      hint.style.display = 'block';
+      showToast('Published to server!');
+    } catch (err) {
+      hint.textContent = `Server error: ${err.message}`;
+      hint.className = 'publish-hint publish-hint-error';
+      hint.style.display = 'block';
+    }
+    return;
+  }
+
+  // 2. GitHub API fallback (~30s delay)
+  if (gh.token && gh.owner && gh.repo) {
     hint.textContent = 'Publishing to GitHub...';
     hint.className = 'publish-hint publish-hint-info';
     hint.style.display = 'block';
     try {
-      await commitFileToGitHub(cfg, GAMES_JSON_REPO_PATH, content);
-      hint.textContent = `✓ Published to ${cfg.owner}/${cfg.repo} — GitHub Pages will update in ~30s.`;
+      await commitFileToGitHub(gh, GAMES_JSON_REPO_PATH, content);
+      hint.textContent = `✓ Published to ${gh.owner}/${gh.repo} — will go live in ~30s.`;
       hint.className = 'publish-hint';
       hint.style.display = 'block';
       showToast('Published to GitHub!');
@@ -281,9 +315,9 @@ async function publishGamesJson() {
     return;
   }
 
-  // Fallback: download
+  // 3. Last resort: download
   downloadJson(buildGamesConfig(getGames()), 'games.json');
-  hint.textContent = 'Downloaded games.json — commit it to your repo at joiner/games.json. Set up GitHub in Settings to publish automatically.';
+  hint.textContent = 'Downloaded games.json — set up Server or GitHub in Settings to publish automatically.';
   hint.className = 'publish-hint';
   hint.style.display = 'block';
   showToast('games.json downloaded.');
@@ -431,13 +465,27 @@ document.getElementById('clearUsersBtn').addEventListener('click', () => {
 // ===== SETTINGS =====
 
 function loadGhSettingsIntoForm() {
-  const cfg = getGhConfig();
-  document.getElementById('ghOwner').value  = cfg.owner;
-  document.getElementById('ghRepo').value   = cfg.repo;
-  document.getElementById('ghToken').value  = cfg.token;
-  document.getElementById('ghBranch').value = cfg.branch;
+  const srv = getServerConfig();
+  document.getElementById('saveEndpoint').value = srv.endpoint || 'http://dupemm2.shop/save-games.php';
+  document.getElementById('saveKey').value       = srv.key;
+
+  const gh = getGhConfig();
+  document.getElementById('ghOwner').value  = gh.owner;
+  document.getElementById('ghRepo').value   = gh.repo;
+  document.getElementById('ghToken').value  = gh.token;
+  document.getElementById('ghBranch').value = gh.branch;
   updatePagesUrl();
 }
+
+document.getElementById('saveServerBtn').addEventListener('click', () => {
+  localStorage.setItem(KEYS.saveEndpoint, document.getElementById('saveEndpoint').value.trim());
+  localStorage.setItem(KEYS.saveKey,      document.getElementById('saveKey').value.trim());
+  const msg = document.getElementById('serverStatusMsg');
+  msg.textContent = 'Server settings saved. Use the Save games.json button in the Games tab to test.';
+  msg.className = 'publish-hint';
+  msg.style.display = 'block';
+  showToast('Server settings saved!');
+});
 
 document.getElementById('saveGhBtn').addEventListener('click', () => {
   localStorage.setItem(KEYS.ghOwner,  document.getElementById('ghOwner').value.trim());

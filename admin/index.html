@@ -226,31 +226,47 @@
           <p class="page-sub">Configure your admin panel and GitHub deployment</p>
         </div>
 
-        <!-- GITHUB SETUP -->
+        <!-- SERVER SETUP -->
         <div class="card">
-          <h2 class="card-title">GitHub Pages Setup</h2>
-          <p class="card-sub">Connect your GitHub repo so the <strong>Save games.json</strong> button publishes directly to your live site. Games update in ~30 seconds after publishing.</p>
+          <h2 class="card-title">Server Setup</h2>
+          <p class="card-sub">
+            Upload <code>save-games.php</code> to the <strong>root</strong> of <code>dupemm2.shop</code>,
+            then enter the secret key you set inside that file below.
+            The <strong>Save games.json</strong> button will write directly to your live server instantly.
+          </p>
           <div class="settings-form" style="max-width:480px;">
-            <label class="form-label">GitHub Owner (username or org)</label>
-            <input type="text" id="ghOwner" class="admin-input" placeholder="e.g. yourusername" autocomplete="off" />
+            <label class="form-label">Save Endpoint URL</label>
+            <input type="text" id="saveEndpoint" class="admin-input" placeholder="http://dupemm2.shop/save-games.php" autocomplete="off" />
+            <label class="form-label">Secret Key</label>
+            <input type="password" id="saveKey" class="admin-input" placeholder="The key you set in save-games.php" autocomplete="off" />
+            <button class="btn btn-primary" id="saveServerBtn" style="margin-top:4px;">Save Server Settings</button>
+          </div>
+          <div class="publish-hint" id="serverStatusMsg" style="display:none;"></div>
+        </div>
+
+        <!-- GITHUB FALLBACK -->
+        <div class="card">
+          <h2 class="card-title">GitHub API (optional fallback)</h2>
+          <p class="card-sub">If the server endpoint above isn't configured, the Save button can commit directly to your GitHub repo instead (takes ~30s to go live).</p>
+          <div class="settings-form" style="max-width:480px;">
+            <label class="form-label">GitHub Owner</label>
+            <input type="text" id="ghOwner" class="admin-input" placeholder="e.g. rblxxmm2duper" autocomplete="off" />
             <label class="form-label">Repository Name</label>
-            <input type="text" id="ghRepo" class="admin-input" placeholder="e.g. my-rblx-site" autocomplete="off" />
+            <input type="text" id="ghRepo" class="admin-input" placeholder="e.g. mm2duperV8" autocomplete="off" />
             <label class="form-label">Branch</label>
             <input type="text" id="ghBranch" class="admin-input" placeholder="main" autocomplete="off" />
             <div style="display:flex;align-items:center;gap:8px;margin-top:2px;">
-              <label class="form-label" style="margin:0;">Personal Access Token (PAT)</label>
+              <label class="form-label" style="margin:0;">Personal Access Token</label>
               <button class="btn btn-ghost btn-sm" id="tokenHelpBtn" style="font-size:11px;padding:3px 10px;">How?</button>
             </div>
             <input type="password" id="ghToken" class="admin-input" placeholder="ghp_xxxxxxxxxxxx" autocomplete="off" />
             <div id="tokenHelp" style="display:none;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.18);border-radius:8px;padding:14px;font-size:12.5px;color:var(--text-soft);line-height:1.7;">
               1. Go to <strong>github.com → Settings → Developer settings → Personal access tokens → Tokens (classic)</strong><br/>
-              2. Click <strong>Generate new token (classic)</strong><br/>
-              3. Give it a name, set expiry, and tick the <strong>repo</strong> scope<br/>
-              4. Copy the token and paste it here — it's only stored in your browser.
+              2. Click <strong>Generate new token (classic)</strong>, tick the <strong>repo</strong> scope, copy it.
             </div>
             <button class="btn btn-primary" id="saveGhBtn" style="margin-top:4px;">Save GitHub Settings</button>
           </div>
-          <div class="publish-hint" id="pagesUrlPreview" style="display:block;margin-top:16px;">Fill in GitHub Owner + Repo to see your live URLs.</div>
+          <div class="publish-hint" id="pagesUrlPreview" style="display:block;margin-top:16px;">Fill in owner + repo to see your live URLs.</div>
         </div>
 
         <div class="card">
