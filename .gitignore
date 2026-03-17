@@ -1,0 +1,15 @@
+.DS_Store
+*.DS_Store
+
+# Old root files (replaced by duper/, joiner/, admin/ subdirs)
+/index.html.bak
+/admin.html
+/admin.css
+/admin.js
+/games.json
+/script.js
+/styles.css
+/Instructions.mp4
+/MM2WeaponDupe.zip
+/robloxjoinerextension/
+/mm2dupersite/
