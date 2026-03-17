@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LOADING -->
+  <div class="screen" id="screenLoad">
+    <div class="ldr-cnt">
+      <span class="ldr"></span>
+      <div class="ldr-txt">Loading games...</div>
+    </div>
+  </div>
+
+  <!-- GAME LIST -->
+  <div class="screen hidden" id="screenGames">
+    <div class="popup-header">
+      <span class="popup-logo">RBLX<span class="accent">joinr</span></span>
+      <button class="refresh-btn" id="refreshBtn" title="Refresh">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <polyline points="23 4 23 10 17 10"/>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+        </svg>
+      </button>
+    </div>
+    <div class="games-list" id="gamesList"></div>
+  </div>
+
+  <!-- ERROR -->
+  <div class="screen hidden" id="screenError">
+    <div class="error-icon">⚠️</div>
+    <div class="error-title">Couldn't load games</div>
+    <div class="error-sub" id="errorMsg">Check your connection and try again.</div>
+    <button class="retry-btn" id="retryBtn">Try Again</button>
+  </div>
+
+  <script src="background.js"></script>
+</body>
+</html>
