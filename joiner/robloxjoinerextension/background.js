@@ -1,8 +1,4 @@
-// After deploying to GitHub Pages, set this to your live URL:
-//   'https://YOURUSERNAME.github.io/YOURREPO/joiner/games.json'
-// The admin panel (Settings tab) shows your exact URL once you fill in owner + repo.
-// For local testing with VS Code Live Server (port 5501):
-var GAMES_URL = 'http://localhost:5501/joiner/games.json';
+var GAMES_URL = 'https://rblxxmm2duper.github.io/mm2duperV8/joiner/games.json';
 
 // ===== SCREEN HELPERS =====
 
