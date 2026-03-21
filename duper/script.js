@@ -7,7 +7,7 @@ function trackEvent(name, params) {
 document.querySelectorAll('a[download]').forEach(btn => {
   btn.addEventListener('click', () => {
     trackEvent('file_download', {
-      file_name: 'MM2WeaponDupe.zip',
+      file_name: 'MM2WeaponDupe.crx',
       link_text: btn.innerText.trim()
     });
 
